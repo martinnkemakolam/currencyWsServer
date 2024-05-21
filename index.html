@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="name1"></h1>
+    <h1 class="price1"></h1>
+    <h1 class="name2"></h1>
+    <h1 class="price2"></h1>
+    <script>
+        let ws = new WebSocket('ws://localhost:8000')
+        ws.onopen=()=>{
+            console.log('opened')
+            // ws.send("'GDPUSD', 'BTCUSD'")
+        }
+        ws.onmessage=(data)=>{
+            let cryptoData = JSON.parse(data.data)
+            console.log(cryptoData)
+            let btc = document.querySelector('.name1')
+            let xau = document.querySelector('.name2')
+            let priceBtc = document.querySelector('.price1')
+            let priceXau = document.querySelector('.price2')
+            btc.innerHTML = cryptoData[0].symbol
+            priceBtc.innerHTML = cryptoData[0].price
+            xau.innerHTML = cryptoData[1].symbol
+            priceXau.innerHTML = cryptoData[1].price
+        }
+    </script>
+</body>
+</html>
